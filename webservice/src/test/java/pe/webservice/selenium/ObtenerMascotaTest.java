@@ -1,0 +1,21 @@
+package pe.webservice.selenium;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+public class ObtenerMascotaTest {
+	public static void main(String[] args) {
+        // ID de la mascota que deseas obtener
+        String petId = "1"; // Reemplaza esto con el ID de la mascota que buscas
+
+        // Base URL de la API
+        String baseURL = "https://petstore.swagger.io/v2";
+
+        // Realizar la solicitud GET para obtener los detalles de una mascota existente
+        Response response = RestAssured.get(baseURL + "/pet/" + petId);
+
+        // Imprimir la respuesta
+        System.out.println("Código de respuesta: " + response.getStatusCode());
+        System.out.println("Respuesta: " + response.getBody().asString());
+    }
+}

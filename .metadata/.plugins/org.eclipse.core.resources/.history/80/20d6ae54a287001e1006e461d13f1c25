@@ -1,0 +1,61 @@
+package pe.web.selenium;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class AgregarAlCarritoTest {
+	WebDriver driver;
+	
+	@BeforeAll
+	static void configuracionInicial() {
+		// 1. Configurar y descargar el driver (chromedriver)
+		WebDriverManager.chromedriver().setup();
+	}
+
+	@BeforeEach
+	void instanciarDriver() {
+		// 2. instancia
+		driver = new ChromeDriver();
+	}
+	
+	@Test
+    public void agregarAlCarrito() {
+        // Abrir la página web
+        driver.get("https://www.demoblaze.com/index.html");
+
+        
+        // Agregar una laptop al carrito
+        WebElement laptop = driver.findElement(By.xpath("//a[contains(text(),'Laptops')]"));
+        laptop.click();
+        
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        
+        WebElement sony = driver.findElement(By.xpath("//a[contains(text(),'Sony vaio i5')]"));
+        sony.click();
+        
+        WebDriverWait wait2 = new WebDriverWait(driver, 10);
+/*
+        WebElement addToCartButton = driver.findElement(By.xpath("//a[contains(text(),'Add to cart')]"));
+        addToCartButton.click();
+
+        // Esperar un momento para que se agregue al carrito (puedes agregar una espera explícita aquí)
+
+        // Ir al carrito
+        WebElement cartLink = driver.findElement(By.id("cartur"));
+        cartLink.click();
+
+        // Verificar que la laptop está en el carrito
+        WebElement laptopInCart = driver.findElement(By.xpath("//td[contains(text(),'Laptop')]"));
+        assertTrue(laptopInCart.isDisplayed());*/
+    }
+}

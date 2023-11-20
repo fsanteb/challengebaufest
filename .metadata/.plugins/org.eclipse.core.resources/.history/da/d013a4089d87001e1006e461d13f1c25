@@ -1,0 +1,85 @@
+package pe.web.selenium;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class UsuarioTest {
+	WebDriver driver;
+
+	@BeforeAll
+	static void configuracionInicial() {
+		// 1. Configurar y descargar el driver (chromedriver)
+		WebDriverManager.chromedriver().setup();
+	}
+
+	@BeforeEach
+	void instanciarDriver() {
+		// 2. instancia
+		driver = new ChromeDriver();
+	}
+
+	@AfterEach
+	void cerrarDriver() {
+		// Cerramos la web
+		driver.quit();
+	}
+
+	@Order(1)
+	@Test
+	void abrirPaginaSeleniumTest() {
+		// 3. abrir el navegador y cargar la pagina selenium.dev
+		driver.get("https://demoblaze.com/index.html");
+		
+		// Encontrar y hacer clic en el enlace "Sign Up"
+        WebElement signUpLink = driver.findElement(By.id("signin2"));
+        signUpLink.click();
+
+        // Esperar un momento para que aparezca el formulario de registro
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Rellenar el formulario con los datos del nuevo usuario
+        WebElement usernameField = driver.findElement(By.id("sign-username"));
+        usernameField.sendKeys("NuevoUsuario");
+
+        WebElement passwordField = driver.findElement(By.id("sign-password"));
+        passwordField.sendKeys("contraseña123");
+
+        WebElement signUpButton = driver.findElement(By.xpath("//button[contains(text(),'Sign up')]"));
+        signUpButton.click();
+        
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        // Esperar a que aparezca la alerta (puedes agregar una espera explícita aquí)
+        Alert alert = driver.switchTo().alert();
+
+        // Obtener el texto de la alerta
+        String alertMessage = alert.getText();
+        System.out.println("Mensaje: " + alertMessage);
+        // Validar el mensaje de la alerta
+        Assertions.assertEquals("Sign up successful", alertMessage);
+        
+        //Assertions.assertEquals("This user already exist., alertMessage);
+        // Cerrar la alerta
+        alert.accept(); // O alert.dismiss(); si es necesario cancelar la alerta
+
+		/*WebElement successMessage = driver.findElement(By.xpath("//div[@class='alert alert-success']"));
+		Assertions.assertTrue(successMessage.isDisplayed());
+		Assertions.assertEquals("Sign up successful", successMessage.getText());*/
+
+	}
+}

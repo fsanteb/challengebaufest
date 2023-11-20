@@ -1,0 +1,5 @@
+package pe.web.selenium;
+
+public class LoginLogoutTest {
+
+}

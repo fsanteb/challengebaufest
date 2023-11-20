@@ -1,0 +1,42 @@
+package pe.webservice.selenium;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+
+public class AgregarMascotaTest {
+	public static void main(String[] args) {
+        // Base URL de la API
+        String baseURL = "https://petstore.swagger.io/v2";
+
+        // Cuerpo de la solicitud para agregar una mascota
+        String requestBody = "{\n" +
+                "  \"id\": 1,\n" +
+                "  \"category\": {\n" +
+                "    \"id\": 0,\n" +
+                "    \"name\": \"string\"\n" +
+                "  },\n" +
+                "  \"name\": \"Fido\",\n" +
+                "  \"photoUrls\": [\n" +
+                "    \"string\"\n" +
+                "  ],\n" +
+                "  \"tags\": [\n" +
+                "    {\n" +
+                "      \"id\": 0,\n" +
+                "      \"name\": \"string\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"status\": \"available\"\n" +
+                "}";
+
+        // Realizar la solicitud POST para agregar una mascota
+        Response response = RestAssured.given()
+                .contentType("application/json")
+                .body(requestBody)
+                .post(baseURL + "/pet");
+
+        // Imprimir la respuesta
+        System.out.println("Código de respuesta: " + response.getStatusCode());
+        System.out.println("Respuesta: " + response.getBody().asString());
+    }
+}

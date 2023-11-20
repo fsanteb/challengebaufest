@@ -1,0 +1,14 @@
+Feature: Crear un nuevo usuario en DemoBlaze
+
+ Scenario: Alta de usuario
+    Given que abro el navegador
+    When ingreso a "https://www.demoblaze.com/index.html"
+    And selecciono "Sign up" en la página principal
+    And completo el formulario con nombre <Username> y contraseña <Password>
+    And presiono el botón "Sign Up"
+    Then verifico que el usuario ha sido creado exitosamente
+    
+     Ejemplos:
+    
+    |Username|Password |
+    |"FSANTE1"|"123456"|

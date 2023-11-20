@@ -1,0 +1,5 @@
+package pe.webservice.selenium;
+
+public class ObtenerMascotaTest {
+
+}
